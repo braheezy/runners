@@ -1,0 +1,39 @@
+---
+
+- name: Configure machine
+  become: yes
+  hosts: all
+
+  tasks:
+
+    - name: Run yum update
+      yum:
+        name: "*"
+        state: latest
+
+    - name: Ensure extra (cool) packages are installed
+      yum:
+        name:
+          - bat
+          - spice-vdagent
+        state: present
+
+    # We need this on for other GUI-based installs to work later.
+    - name: Enable auto-login
+      ini_file:
+        path: /etc/gdm/custom.conf
+        section: daemon
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
+        mode: 0644
+        backup: yes
+      loop:
+      - { option: AutomaticLoginEnable, value: "True"}
+      - { option: AutomaticLogin, value: "{{ ansible_user_id }}" }
+
+    - import_role:
+        name: hashicorp
+    - import_role:
+        name: qemu
+    - import_role:
+        name: github-runner

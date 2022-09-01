@@ -1,0 +1,13 @@
+---
+
+- name: Ensure runner user exists
+  user:
+    name: rungal
+    password: '{{ 'password' | password_hash('sha512', 'mysecretsalt') }}'
+
+- import_role:
+    name: monolithprojects.github_actions_runner
+  vars:
+    - runner_user: rungal
+    - github_account: braheezy
+    - github_repo: prettybox-catppuccin

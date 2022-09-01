@@ -1,0 +1,11 @@
+---
+- name: Install Vagrant
+  yum:
+    name: vagrant
+    state: present
+    disablerepo: hashicorp
+
+- name: Vagrant libvirt support
+  yum:
+    name: vagrant-libvirt
+    state: present

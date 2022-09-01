@@ -1,0 +1,46 @@
+---
+
+- name: Install the 'virtualization' group
+  yum:
+    name: "@virtualization"
+    state: present
+
+- name: Install extra libvirt packages
+  yum:
+    name:
+      - libvirt
+      - libvirt-devel
+      - libxml2-devel
+    state: present
+
+- name: Ensure libvirt group exists
+  group:
+    name: libvirt
+    state: present
+
+- name: Ensure user is in libvirt group
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: libvirt
+    append: yes
+
+- name: Give users in Libvirt group permissions
+  lineinfile:
+    dest: /etc/libvirt/libvirtd.conf
+    regexp: '{{ item.reg }}'
+    line: '{{ item.line }}'
+  loop:
+    - { reg: '^unix_sock_group.*$', line: 'unix_sock_group = "libvirt"'}
+    - { reg: '^unix_sock_rw_perms.*$', line: 'unix_sock_rw_perms = "0770"'}
+
+- name: Enable/start libvirtd service
+  systemd:
+    name: libvirtd
+    state: started
+    enabled: yes
+
+- name: Enable/start virtnetworkd service
+  systemd:
+    name: virtnetworkd
+    state: started
+    enabled: yes
