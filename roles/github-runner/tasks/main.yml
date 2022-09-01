@@ -1,0 +1,19 @@
+---
+
+- name: Ensure runner user exists
+  user:
+    name: rungal
+    password: "{{ runner_password | password_hash('sha512', 'mysecretsalt') }}"
+
+- import_role:
+    name: monolithprojects.github_actions_runner
+  vars:
+    - github_account: braheezy
+    - access_token: "{{ github_pat }}"
+    - github_repo: prettybox-catppuccin
+    - reinstall_runner: yes
+    - runner_user: rungal
+    - runner_name: qemu-builder
+    - runner_labels:
+      - qemu
+      - fedora
