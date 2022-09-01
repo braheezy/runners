@@ -37,3 +37,8 @@
         name: qemu
     - import_role:
         name: github-runner
+
+    - name: Change vagrant user password
+      user:
+        name: vagrant
+        password: "{{ vagrant_password | password_hash('sha512', 'mysecretsalt') }}"
