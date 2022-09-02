@@ -33,7 +33,7 @@ qemu: $(QEMU_OUTPUT)
 
 $(QEMU_OUTPUT): $(PACKER_TEMPLATE)
 	@echo -e "${GREEN}Starting build for qemu!${END}"
-	$(PACKER_BIN) build -force -only=vagrant.qemu -var-file=secret.pkrvars.hcl $(PACKER_TEMPLATE)
+	$(PACKER_BIN) build -force .
 
 clean:
 	@echo -e "${GREEN}Deleting output folders...${END}"
