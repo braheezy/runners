@@ -10,7 +10,7 @@ build {
   # Required for ansible-local provisioners
   provisioner "shell" {
     inline = [
-      "sudo yum install -y ansible-core cowsay"
+      "sudo yum install -y ansible-core python3-psutil cowsay"
     ]
   }
 
