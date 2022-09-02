@@ -44,3 +44,11 @@
       user:
         name: vagrant
         password: "{{ vagrant_password | password_hash('sha512', 'mysecretsalt') }}"
+
+    - name: Update accepted key types
+      blockinfile:
+        path: "{{ ansible_env.HOME }}/.ssh/config"
+        create: yes
+        block: |
+          Host *
+            PubkeyAcceptedKeyTypes=+ssh-dss
