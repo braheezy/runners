@@ -37,6 +37,8 @@
         name: qemu
     - import_role:
         name: github-runner
+    - import_role:
+        name: gnome
 
     - name: Change vagrant user password
       user:
