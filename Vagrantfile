@@ -1,9 +1,6 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
 # The resources to give the VM.
 CPUS = 2
-MEMORY = 4096
+MEMORY = 6144
 # The name of the VM.
 NAME = "builder-f35"
 
@@ -35,7 +32,7 @@ Vagrant.configure("2") do |config|
     # Libvirt shared folders. This requires fairly modern versions of Linux.
     l.memorybacking :source, :type => "memfd"
     l.memorybacking :access, :mode => "shared"
-    override.vm.synced_folder "~/prettybox-catppuccin", "/vagrant", type: "rsync", disabled: false
+    override.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
 
     # Enable Hyper-V enlightments: https://blog.wikichoon.com/2014/07/enabling-hyper-v-enlightenments-with-kvm.html
     l.hyperv_feature :name => 'relaxed', :state => 'on'
