@@ -8,9 +8,9 @@
 - import_role:
     name: monolithprojects.github_actions_runner
   vars:
-    - github_account: braheezy
+    - github_account: "{{ github_account }}"
     - access_token: "{{ github_pat }}"
-    - github_repo: runners
+    - github_repo: "{{ github_repo }}"
     - reinstall_runner: yes
     - runner_user: rungal
     - runner_name: qemu-builder

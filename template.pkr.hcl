@@ -17,27 +17,22 @@ build {
   # Do bulk of provisioning
   provisioner "ansible-local" {
     playbook_file = "provision.yml"
-    playbook_dir = "roles"
-    command = var.ansible_command
-    galaxy_file = "galaxy-requirements.yml"
+    role_paths = [
+      "roles/github-runner",
+      "roles/gnome",
+      "roles/hashicorp",
+      "roles/qemu",
+    ]
+    galaxy_file = "requirements.yml"
     extra_arguments = [
-      "--extra-vars", "ansible_python_interpreter=/usr/bin/python3",
+      "-e", "stdout_callback=yaml",
       "-e", "vagrant_password=${var.vagrant_password}",
       "-e", "runner_password=${var.runner_password}",
-      "-e", "github_pat=${var.github_pat}"
+      "-e", "github_pat=${var.github_pat}",
+      "-e", "github_account=${var.github_account}",
+      "-e", "github_repo=${var.github_repo}"
     ]
   }
-}
-
-# Changing the called command seems to be the only way to inject Ansible ENV vars
-variable "ansible_command" {
-  type = string
-  default = <<TEXT
-    ANSIBLE_FORCE_COLOR=1 \
-    PYTHONUNBUFFERED=1 \
-    ANSIBLE_COW_SELECTION=hellokitty \
-    ansible-playbook \
-  TEXT
 }
 
 variable "github_pat" {
@@ -53,4 +48,12 @@ variable "vagrant_password" {
 variable "runner_password" {
   type = string
   sensitive = true
+}
+
+variable "github_account" {
+  type = string
+}
+
+variable "github_repo" {
+  type = string
 }
