@@ -10,7 +10,7 @@
   vars:
     - github_account: braheezy
     - access_token: "{{ github_pat }}"
-    - github_repo: prettybox-catppuccin
+    - github_repo: runners
     - reinstall_runner: yes
     - runner_user: rungal
     - runner_name: qemu-builder
