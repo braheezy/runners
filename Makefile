@@ -26,14 +26,11 @@ help:
 all: qemu
 	@echo -e "${GREEN}Build is complete!${END}"
 
-# Try to include a .env file (that has secrets) but don't fail if it's not there
-# -include .env
-
 qemu: $(QEMU_OUTPUT)
 
 $(QEMU_OUTPUT): $(PACKER_TEMPLATE)
 	@echo -e "${GREEN}Starting build for qemu!${END}"
-	$(PACKER_BIN) build -force .
+	$(PACKER_BIN) build .
 
 clean:
 	@echo -e "${GREEN}Deleting output folders...${END}"
